@@ -1,5 +1,7 @@
 FROM node:alpine
-WORKDIR /server
+RUN adduser -D server
+USER server
+WORKDIR /home/server
 COPY package.json ./
 RUN npm install
 COPY . .
