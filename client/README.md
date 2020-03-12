@@ -12,3 +12,4 @@ Ongoing:
 - CICD scripting  
    build docker image, push to repository,install charts  
 - Run some test  
+- HPA support
