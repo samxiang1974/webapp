@@ -7,6 +7,8 @@ Done:
    including sa,deployment,service 
 
 Ongoing:  
+- nginx Prometheus exporter and service monitoring  
+- ingress TLS   
 - CICD scripting  
    build docker image, push to repository,install charts  
 - Run some test  
