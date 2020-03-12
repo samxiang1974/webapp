@@ -6,6 +6,7 @@ replicaCount: 3
 
 image:
   repository: samxiang1974/server
+  tag: v0.0.1
   pullPolicy: IfNotPresent
 
 

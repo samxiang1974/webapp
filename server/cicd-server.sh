@@ -4,6 +4,8 @@
 # source stage
 # git clone from github
 
+set -exf -o pipefail
+
 # commit stage
 CI_COMMIT_SHORT_SHA=$(date +%s)
 CONTAINER_IMAGE="samxiang1974/server:${CI_COMMIT_SHORT_SHA}"
@@ -18,7 +20,7 @@ PACKAGE=server-chart
 cd ${PACKAGE}
 DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
 if [ $DEPLOYED == 0 ] ; then
-  helm install --namespace webapp --set mariadb.db.password=${DBPASSWORD} --name ${PACKAGE} .
+  helm install --namespace webapp --set mariadb.db.password=${DBPASSWORD} --set image.tag=${CI_COMMIT_SHORT_SHA} --name ${PACKAGE} .
 else
   helm upgrade --namespace webapp --set mariadb.db.password=${DBPASSWORD} ${PACKAGE} .
 fi
