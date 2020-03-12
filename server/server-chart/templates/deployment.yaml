@@ -14,10 +14,6 @@ spec:
       labels:
         {{- include "server-chart.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
       serviceAccountName: {{ include "server-chart.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -28,17 +24,46 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: serverport
+              containerPort: 3000
               protocol: TCP
+          env:
+          - name: MYSQL_HOST
+          {{- if .Values.mariadb.enabled }}
+            value: {{ .Values.mariadb.hostname | quote }}
+          {{- else }}
+            value: unknown
+          {{- end }}
+          - name: MYSQL_USER
+          {{- if .Values.mariadb.enabled }}
+            value: {{ .Values.mariadb.db.user | quote }}
+          {{- else }}
+            value: unknown
+          {{- end }}
+          - name: MYSQL_DATABASE
+          {{- if .Values.mariadb.enabled }}
+            value: {{ .Values.mariadb.db.name | quote }}
+          {{- else }}
+            value: unknown
+          {{- end }}
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+              {{- if .Values.mariadb.enabled }}
+                name: {{ .Values.mariadb.hostname }}
+                key: mariadb-password
+              {{- else }}
+                name: unknown
+                key: db-password
+              {{- end }}
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /health
+              port: serverport
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /ready
+              port: serverport
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

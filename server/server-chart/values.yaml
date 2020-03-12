@@ -13,6 +13,7 @@ serviceAccount:
   create: true
   name:
 
+podSecurityContext: {}
 
 securityContext: 
   capabilities:
@@ -32,7 +33,7 @@ ingress:
 
   hosts:
     - host: api.webapp.local
-      paths: /
+      paths: ["/"]
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -61,13 +62,8 @@ affinity: {}
 ##
 mariadb:
   enabled: true
-  replication:
-    enabled: false
+  hostname: webappdb
   db:
     name: app
     user: app-user
-  master:
-    persistence:
-      enabled: true
-      accessMode: ReadWriteOnce
-      size: 8Gi
+    password: passw0rd

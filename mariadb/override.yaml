@@ -1,0 +1,13 @@
+replication:
+  enabled: false
+db:
+  name: app
+  user: app-user
+  password: passw0rd
+master:
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 8Gi
+metrics:
+  enabled: true
