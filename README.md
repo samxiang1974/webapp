@@ -6,7 +6,7 @@ This repository will
 5. Monitoring the health of pods.
 6. Setting up auto-scaling to handle high load.
 
-Folder structure:
-server: this folder will contain our ExpressJS server and Helm charts to deploy it.
-client: this folder will contain everything React and Helm charts to deploy it.
-mariadb: this folder will contain override parameter to install mariadb.
+Folder structure:   
+server: this folder will contain our ExpressJS server and Helm charts to deploy it.  
+client: this folder will contain everything React and Helm charts to deploy it.  
+mariadb: this folder will contain override parameter to install mariadb.   
