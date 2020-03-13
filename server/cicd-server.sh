@@ -6,9 +6,13 @@
 
 set -exf -o pipefail
 
+DBPASSWORD=$1
+
 # commit stage
 CI_COMMIT_SHORT_SHA=$(date +%s)
 CONTAINER_IMAGE="samxiang1974/server:${CI_COMMIT_SHORT_SHA}"
+DOCKER_USERNAME=samxiang1974
+DOCKER_PASSWORD=
 docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
 docker build -t ${CONTAINER_IMAGE} .
 docker push ${CONTAINER_IMAGE}
@@ -20,8 +24,8 @@ PACKAGE=server-chart
 cd ${PACKAGE}
 DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
 if [ $DEPLOYED == 0 ] ; then
-  helm install --namespace webapp --set mariadb.db.password=${DBPASSWORD} --set image.tag=${CI_COMMIT_SHORT_SHA} --name ${PACKAGE} .
+  helm install --namespace webapp  --wait --set mariadb.db.password=${DBPASSWORD} --set image.tag=${CI_COMMIT_SHORT_SHA} --name ${PACKAGE} .
 else
-  helm upgrade --namespace webapp --set mariadb.db.password=${DBPASSWORD} ${PACKAGE} .
+  helm upgrade --namespace webapp --wait --set mariadb.db.password=${DBPASSWORD} ${PACKAGE} .
 fi
 echo "deployed!"

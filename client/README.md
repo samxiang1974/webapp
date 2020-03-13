@@ -5,11 +5,11 @@ Done:
    Create docker image  
 - Chart creation  
    including sa,deployment,service 
-
-Ongoing:  
 - nginx Prometheus exporter and service monitoring  
 - ingress TLS   
 - CICD scripting  
    build docker image, push to repository,install charts  
-- Run some test  
+
+Ongoing:  
+- Run the whole process on k8s  
 - HPA support

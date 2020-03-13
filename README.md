@@ -9,3 +9,4 @@ This repository will
 Folder structure:
 server: this folder will contain our ExpressJS server and Helm charts to deploy it.
 client: this folder will contain everything React and Helm charts to deploy it.
+mariadb: this folder will contain override parameter to install mariadb.

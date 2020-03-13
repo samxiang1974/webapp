@@ -9,6 +9,8 @@ set -exf -o pipefail
 # commit stage
 CI_COMMIT_SHORT_SHA=$(date +%s)
 CONTAINER_IMAGE="samxiang1974/client:${CI_COMMIT_SHORT_SHA}"
+DOCKER_USERNAME=samxiang1974
+DOCKER_PASSWORD=
 docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
 docker build -t ${CONTAINER_IMAGE} .
 docker push ${CONTAINER_IMAGE}
