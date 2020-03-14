@@ -24,8 +24,8 @@ PACKAGE=server-chart
 cd ${PACKAGE}
 DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
 if [ $DEPLOYED -eq 0 ] ; then
-  helm install --namespace webapp  --wait --set mariadb.hostname=${DBHOST} --set mariadb.db.password=${DBPASSWORD} --set image.tag=${CI_COMMIT_SHORT_SHA} --name ${PACKAGE} .
+  helm install --namespace webapp  --wait --set mariadb.hostname=${DBHOST} --set mariadb.db.password=${DBPASSWORD} --set-string image.tag=${CI_COMMIT_SHORT_SHA} --name ${PACKAGE} .
 else
-  helm upgrade --namespace webapp --wait --set mariadb.db.password=${DBPASSWORD} ${PACKAGE} .
+  helm upgrade --namespace webapp --wait --set mariadb.db.password=${DBPASSWORD} --set-string image.tag=${CI_COMMIT_SHORT_SHA} ${PACKAGE} .
 fi
 echo "deployed!"

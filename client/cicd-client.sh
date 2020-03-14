@@ -22,8 +22,8 @@ PACKAGE=client-chart
 cd ${PACKAGE}
 DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
 if [ $DEPLOYED -eq 0 ] ; then
-  helm install --namespace webapp --set image.tag=${CI_COMMIT_SHORT_SHA} --name ${PACKAGE} .
+  helm install --namespace webapp --set-string image.tag=${CI_COMMIT_SHORT_SHA} --name ${PACKAGE} .
 else
-  helm upgrade --namespace webapp  ${PACKAGE} .
+  helm upgrade --namespace webapp  --set-string image.tag=${CI_COMMIT_SHORT_SHA} ${PACKAGE} .
 fi
 echo "deployed!"
