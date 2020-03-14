@@ -6,7 +6,7 @@ db:
   password: passw0rd
 master:
   persistence:
-    enabled: true
+    enabled: false
     accessMode: ReadWriteOnce
     size: 8Gi
 metrics:

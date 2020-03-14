@@ -4,7 +4,7 @@
 # source stage
 # git clone from github
 
-set -exf -o pipefail
+set -exf 
 
 # commit stage
 CI_COMMIT_SHORT_SHA=$(date +%s)
@@ -21,7 +21,7 @@ PACKAGE=client-chart
 
 cd ${PACKAGE}
 DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
-if [ $DEPLOYED == 0 ] ; then
+if [ $DEPLOYED -eq 0 ] ; then
   helm install --namespace webapp --set image.tag=${CI_COMMIT_SHORT_SHA} --name ${PACKAGE} .
 else
   helm upgrade --namespace webapp  ${PACKAGE} .

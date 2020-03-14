@@ -4,7 +4,7 @@
 # source stage
 # git clone from github
 
-set -exf -o pipefail
+set -exf 
 
 DB_PASSWORD="passw0rd"
 
@@ -13,7 +13,7 @@ DB_PASSWORD="passw0rd"
 PACKAGE=mariadb
 DB_NAMESPACE=webappdb
 DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
-if [ $DEPLOYED == 0 ] ; then
+if [ $DEPLOYED -eq 0 ] ; then
   echo "Install $PACKAGE"
   REPO="https://kubernetes-charts.storage.googleapis.com"
   helm repo add stable $REPO
@@ -22,8 +22,8 @@ fi
 
 # server install
 echo "Install server"
-sh ./server/cicd-server.sh "${PACKAGE}.$DB_NAMESPACE" $DB_PASSWORD
+(cd server && sh ./cicd-server.sh "${PACKAGE}.$DB_NAMESPACE" $DB_PASSWORD )
 
 #client install
 echo "Install client"
-sh ./client/cicd-client.sh
+(cd client && sh ./cicd-client.sh )
