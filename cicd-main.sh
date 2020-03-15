@@ -6,6 +6,7 @@
 
 set -exf 
 
+# in production, the credentials can get from vault or secret management from CI tool
 DB_PASSWORD="passw0rd"
 
 # database install
