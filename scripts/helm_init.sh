@@ -3,7 +3,7 @@
 curl -LO https://git.io/get_helm.sh
 chmod 700 get_helm.sh
 ./get_helm.sh
-cat << EOF|kubectl apply -f -
+cat << EOF | kubectl apply -f -
 apiVersion: v1
 kind: ServiceAccount
 metadata:
