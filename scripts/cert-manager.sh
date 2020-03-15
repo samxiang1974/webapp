@@ -4,7 +4,8 @@ kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/relea
 kubectl create namespace cert-manager
 helm repo add jetstack https://charts.jetstack.io
 helm repo update && helm install --name cert-manager --namespace cert-manager --set rbac.create=true jetstack/cert-manager \
-   --set ingressShim.extraArgs='{--default-issuer-name=letsencrypt-prod,--default-issuer-kind=ClusterIssuer}'
+  --set ingressShim.defaultIssuerName=letsencrypt-prod \
+  --set ingressShim.defaultIssuerKind=ClusterIssuer
 cat <<EOF | kubectl apply -f -
 apiVersion: certmanager.k8s.io/v1alpha2
 kind: ClusterIssuer
